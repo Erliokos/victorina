@@ -6,6 +6,9 @@ const session = require('express-session');
 const cors = require("cors");
 const FileStore = require('session-file-store')(session)
 
+const authRouter = require('./src/routes/auth.router')
+const usersRouter = require('./src/routes/users.router')
+
 const PORT = process.env.PORT || 3002
 
 app.use(cors({
@@ -25,16 +28,10 @@ app.use(
     cookie: { expires: 24 * 24 * 60e3 },
   })
 )
-app.use((req, res, next) => {
-  res.locals.user = req.session.user
-  next() //res.locals глобальная переменная, req.session заполняется из сессии
-})
 
-app.get('/exit',(req,res)=>{
-  req.session.destroy();
-  res.clearCookie("sid");
-  res.redirect("/");
-})
+
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', usersRouter)
 
 
 app.listen(PORT, () => console.log(`Server has been started on PORT:${PORT}`))
