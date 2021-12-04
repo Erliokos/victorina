@@ -1,0 +1,5 @@
+npx sequelize model:generate --name User --attributes name:string,emai:string,pass:string
+npx sequelize model:generate --name Theme --attributes name:string
+npx sequelize model:generate --name Question --attributes que:text,ans:text,point:integer,theme_id:integer
+npx sequelize model:generate --name Game --attributes user_id:integer,que_id:integer,game_id:integer
+
